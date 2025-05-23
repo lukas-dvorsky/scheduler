@@ -19,13 +19,13 @@ function generateTime(elementForAppend) {
 function generateArrow(elementForAppend, date) {
     const arrow = document.createElement("div");
 
+    const line_heigth = 0.1 * 4;
     const hour_height = 4; // Each hour is 4 rem
-    const base_offset = -2.3; // Shift from top
 
     let hours = date.getHours() + 2;
     let minutes = date.getMinutes();
 
-    let top_position = base_offset + hour_height * (hours + minutes / 60);
+    let top_position = 9//line_heigth + hour_height * (hours + minutes / 60);
     arrow.style.top = `${top_position}rem`;
 
     arrow.classList.add("arrow");
@@ -36,13 +36,13 @@ function generateArrow(elementForAppend, date) {
 function generateArrowLine(elementForAppend, date) {
     const arrow = document.createElement("div");
 
+    const line_heigth = 0.2;
     const hour_height = 4; // Each hour is 4 rem
-    const base_offset = -2.3; // Shift from top
 
     let hours = date.getHours() + 2;
     let minutes = date.getMinutes();
 
-    let top_position = base_offset + hour_height * (hours + minutes / 60);
+    let top_position = line_heigth + hour_height * (hours + minutes / 60);
     arrow.style.top = `${top_position}rem`;
 
     arrow.classList.add("arrowline");
@@ -97,10 +97,12 @@ function generateDaysAndDates(date, index) {
 
 }
 
-function generateDaysColumns(index, date) {
+function generateDaysColumns(index, date, array) {
     const columnContainer = document.getElementById("columnContainer");
     const div = document.createElement("div");
     div.classList.add("cl_day_column");
+
+    div.id = array[index] + '.' + date.getFullYear();
 
     // Generate arrow for current day
     if(date.getDay() == index + 1) {
@@ -123,9 +125,9 @@ export function generateLayout() {
     setYear(d);
     generateTime(timesContainer);
 
-    getWeekDaysDate().map((date, index) => {
+    getWeekDaysDate().map((date, index, array) => {
         generateDaysAndDates(date, index);
-        generateDaysColumns(index, d)
+        generateDaysColumns(index, d, array)
     })
 }
 
